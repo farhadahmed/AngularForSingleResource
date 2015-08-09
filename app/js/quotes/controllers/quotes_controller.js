@@ -18,10 +18,11 @@ module.exports = function(app) {
     };
 
     $scope.create = function(quote) {
+      $scope.newQuote = null; //This will clear the input box on submission
       $http.post('/api/quotes', quote)
         .then(function(res) {
           $scope.quotes.push(res.data);
-          quote = null; //remember null is an object. Objects are passed to functions by reference.
+          quote = null; //Remember, null is an object. Objects are passed to functions by reference.
         }, function(res) {
           console.log(res.data);
           $scope.errors.push(res.data);
