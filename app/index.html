@@ -15,7 +15,14 @@
     </form>
 
     <ul id="quoteslist">
-      <li data-ng-repeat="quote in quotes">{{quote.quoteBody}}
+      <li data-ng-repeat="quote in quotes">
+        {{quote.quoteBody}}
+        <form data-ng-if="quote.editing" name="{{quote._id}}form" data-ng-submit="update(quote)"> <!-- Careful when using ng-if in Angular. It doesn't work in all cases. -->
+          <input type="text" data-ng-model="quote.quoteBody">
+          <button type="submit">Save</button>
+          <button data-ng-click="quote.editing = false">Cancel</button>
+        </form>
+        <button data-ng-if="!quote.editing" data-ng-click="quote.editing = true">Edit</button>
         <button data-ng-click="destroy(quote)">Delete</button>
       </li> <!-- We want this on li not ul otherwise will create ul for each quote -->
     </ul>

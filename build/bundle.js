@@ -28476,6 +28476,16 @@
 	          $scope.errors.push(res.data);
 	        });
 	    };
+
+	    $scope.update = function(quote) {
+	      $http.put('api/quotes/' + quote._id, quote)
+	        .then(function(res) {
+	          quote.editing = false;
+	        }, function(res) {
+	          quote.editing = false;
+	          console.log(res.data);
+	        });
+	    };
 	  }]);
 	};
 
