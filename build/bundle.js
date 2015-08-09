@@ -28486,6 +28486,17 @@
 	          console.log(res.data);
 	        });
 	    };
+
+	    $scope.edit = function(quote) {
+	      quote.editing = true; //Tyler had written this in view but I feel keeping it in controller is cleaner
+	      quote.startingBody = quote.quoteBody;
+	    };
+
+	    $scope.cancelEdit = function(quote) {
+	      quote.editing = false;
+	      quote.quoteBody = quote.startingBody;
+	    };
+
 	  }]);
 	};
 
