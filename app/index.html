@@ -9,9 +9,9 @@
   <main data-ng-controller="quotesController" data-ng-init="getAll()"> <!-- init says run this function as soon as it's loaded onto the page. -->
     <form name="newQuoteForm" data-ng-submit="create(newQuote)">
       <label for="newQuoteBody">Quote Body:</label>
-      <input type="text" name="newQuoteBody" data-ng-model="newQuote.quoteBody">
+      <input type="text" required name="newQuoteBody" data-ng-model="newQuote.quoteBody">
 
-      <button type="submit">Create New Quote</button> <!-- buttons inside form are default submit. But better to be explicit -->
+      <button type="submit" data-ng-disabled="newQuoteForm.$invalid">Create New Quote</button> <!-- buttons inside form are default submit. But better to be explicit -->
     </form>
 
     <ul id="quoteslist">
