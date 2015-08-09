@@ -1,0 +1,42 @@
+{
+  "name": "AngularForSingleResource",
+  "version": "1.0.0",
+  "description": "An app for creating quotes that includes a rest resource",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "express": "^4.13.3",
+    "mongoose": "^4.1.1"
+  },
+  "devDependencies": {
+    "angular": "^1.4.3",
+    "mocha": "^2.2.5",
+    "chai-http": "^1.0.0",
+    "chai": "^3.2.0",
+    "gulp": "^3.9.0",
+    "gulp-karma": "^0.0.4",
+    "gulp-webpack": "^1.5.0",
+    "jasmine-core": "^2.3.4",
+    "phantomjs": "^1.9.17",
+    "karma": "^0.13.8",
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "^0.2.1"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/farhadahmed/AngularForSingleResource.git"
+  },
+  "author": "Farhad Ahmed",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/farhadahmed/AngularForSingleResource/issues"
+  },
+  "homepage": "https://github.com/farhadahmed/AngularForSingleResource"
+}
