@@ -28455,6 +28455,27 @@
 	          console.log(res.data);
 	        });
 	    };
+
+	    $scope.create = function(quote) {
+	      $http.post('/api/quotes', quote)
+	        .then(function(res) {
+	          $scope.quotes.push(res.data);
+	          quote = null; //remember null is an object. Objects are passed to functions by reference.
+	        }, function(res) {
+	          console.log(res.data);
+	          $scope.errors.push(res.data);
+	        });
+	    };
+
+	    $scope.destroy = function(quote) {
+	      $http.delete('/api/quotes/' + quote._id)
+	        .then(function(res) {
+	          $scope.quotes.splice($scope.quotes.indexOf(quote),1);
+	        }, function(res) {
+	          console.log(res.data);
+	          $scope.errors.push(res.data);
+	        });
+	    };
 	  }]);
 	};
 

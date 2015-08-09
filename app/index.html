@@ -5,7 +5,20 @@
   <title></title>
 </head>
 <body data-ng-app="quotesApp">
+  <h1>Quotes:</h1>
   <main data-ng-controller="quotesController" data-ng-init="getAll()"> <!-- init says run this function as soon as it's loaded onto the page. -->
+    <form name="newQuoteForm" data-ng-submit="create(newQuote)">
+      <label for="newQuoteBody">Quote Body:</label>
+      <input type="text" name="newQuoteBody" data-ng-model="newQuote.quoteBody">
+
+      <button type="submit">Create New Quote</button> <!-- buttons inside form are default submit. But better to be explicit -->
+    </form>
+
+    <ul id="quoteslist">
+      <li data-ng-repeat="quote in quotes">{{quote.quoteBody}}
+        <button data-ng-click="destroy(quote)">Delete</button>
+      </li> <!-- We want this on li not ul otherwise will create ul for each quote -->
+    </ul>
   </main>
 
   <script src="bundle.js"></script>
