@@ -2,6 +2,7 @@
 
 var gulp = require('gulp');
 var webpack = require('gulp-webpack');
+var KarmaServer = require('gulp-karma').Server;
 
 gulp.task('webpack:dev', function() {
   return gulp.src('app/js/client.js') //this will grab what's in client.js and build it into bundle.js and place it into the build folder.
@@ -29,6 +30,12 @@ gulp.task('webpack:test', function() {
 gulp.task('copy', function() {
   return gulp.src('app/**/*.html')
     .pipe(gulp.dest('build/'));
+});
+
+gulp.task('karmatest', function(done) {
+  new KarmaServer({
+    configFile: __dirname + '/karma.conf.js'
+  }, done).start();
 });
 
 gulp.task('build', ['webpack:dev', 'copy']);
