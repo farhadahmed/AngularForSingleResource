@@ -40,7 +40,7 @@ module.exports = function(app) {
     };
 
     $scope.update = function(quote) {
-      $http.put('api/quotes/' + quote._id, quote)
+      $http.put('/api/quotes/' + quote._id, quote)
         .then(function(res) {
           quote.editing = false;
         }, function(res) {

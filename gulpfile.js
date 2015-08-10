@@ -32,12 +32,11 @@ gulp.task('copy', function() {
     .pipe(gulp.dest('build/'));
 });
 
-gulp.task('karmatest', function(done) {
+gulp.task('karmatest', ['webpack:test'], function(done) {
   new KarmaServer({
     configFile: __dirname + '/karma.conf.js'
   }, done).start();
 });
 
 gulp.task('build', ['webpack:dev', 'copy']);
-gulp.task('clienttest', ['webpack:test', 'karmatest']);
-gulp.task('default', ['clienttest', 'build']);
+gulp.task('default', ['karmatest', 'build']);
