@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <title>Farhad's Quotes App</title>
 </head>
 <body data-ng-app="quotesApp">
-  <h1>Aswesome Quotes:</h1>
+  <h1 align="center">Aswesome Quotes:</h1>
   <main data-ng-controller="quotesController" data-ng-init="getAll()"> <!-- init says run this function as soon as it's loaded onto the page. -->
-    <form name="newQuoteForm" data-ng-submit="create(newQuote)">
+    <form name="newQuoteForm" data-ng-submit="create(newQuote)" align="center">
       <label for="newQuoteBody">Insert Quote:</label>
       <input type="text" required name="newQuoteBody" data-ng-model="newQuote.quoteBody">
 
