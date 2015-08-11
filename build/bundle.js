@@ -48,10 +48,11 @@
 
 	__webpack_require__(1);
 	__webpack_require__(2);
+	__webpack_require__(4);
 
-	var quotesApp = angular.module('quotesApp', ['services']);
+	var quotesApp = angular.module('quotesApp', ['services', 'directives']);
 
-	__webpack_require__(4)(quotesApp);
+	__webpack_require__(6)(quotesApp);
 
 
 /***/ },
@@ -28494,13 +28495,39 @@
 
 	'use strict';
 
-	module.exports = function(app) {
-	  __webpack_require__(5)(app);
-	};
+	var directives = angular.module('directives', []);
+	__webpack_require__(5)(directives);
 
 
 /***/ },
 /* 5 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.directive('dummyDirective', function() {
+	    return {
+	      restrict: 'CA', //CA is for class or attribute
+	      template: '<h2>Add some awesome quotes!</h2>'
+	    };
+	  });
+	}
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  __webpack_require__(7)(app);
+	};
+
+
+/***/ },
+/* 7 */
 /***/ function(module, exports) {
 
 	'use strict';

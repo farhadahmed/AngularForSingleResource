@@ -53,7 +53,7 @@
 
 	'use strict';
 	__webpack_require__(2);
-	__webpack_require__(8);
+	__webpack_require__(10);
 
 	describe('quotes controller', function() {
 	  var $ControllerConstructor;
@@ -138,10 +138,11 @@
 
 	__webpack_require__(3);
 	__webpack_require__(4);
+	__webpack_require__(6);
 
-	var quotesApp = angular.module('quotesApp', ['services']);
+	var quotesApp = angular.module('quotesApp', ['services', 'directives']);
 
-	__webpack_require__(6)(quotesApp);
+	__webpack_require__(8)(quotesApp);
 
 
 /***/ },
@@ -28584,13 +28585,39 @@
 
 	'use strict';
 
-	module.exports = function(app) {
-	  __webpack_require__(7)(app);
-	};
+	var directives = angular.module('directives', []);
+	__webpack_require__(7)(directives);
 
 
 /***/ },
 /* 7 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.directive('dummyDirective', function() {
+	    return {
+	      restrict: 'CA', //CA is for class or attribute
+	      template: '<h2>Add some awesome quotes!</h2>'
+	    };
+	  });
+	}
+
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  __webpack_require__(9)(app);
+	};
+
+
+/***/ },
+/* 9 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28646,7 +28673,7 @@
 
 
 /***/ },
-/* 8 */
+/* 10 */
 /***/ function(module, exports) {
 
 	/**

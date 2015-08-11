@@ -6,6 +6,9 @@
 </head>
 <body data-ng-app="quotesApp">
   <h1 align="center">Aswesome Quotes:</h1>
+
+  <div data-dummy-directive></div>
+
   <main data-ng-controller="quotesController" data-ng-init="getAll()"> <!-- init says run this function as soon as it's loaded onto the page. -->
     <form name="newQuoteForm" data-ng-submit="create(newQuote)" align="center">
       <label for="newQuoteBody">Insert Quote:</label>
