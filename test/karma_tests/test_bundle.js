@@ -53,7 +53,7 @@
 
 	'use strict';
 	__webpack_require__(2);
-	__webpack_require__(6);
+	__webpack_require__(8);
 
 	describe('quotes controller', function() {
 	  var $ControllerConstructor;
@@ -137,10 +137,11 @@
 	'use strict';
 
 	__webpack_require__(3);
+	__webpack_require__(4);
 
-	var quotesApp = angular.module('quotesApp', []);
+	var quotesApp = angular.module('quotesApp', ['services']);
 
-	__webpack_require__(4)(quotesApp);
+	__webpack_require__(6)(quotesApp);
 
 
 /***/ },
@@ -28518,9 +28519,8 @@
 
 	'use strict';
 
-	module.exports = function(app) {
-	  __webpack_require__(5)(app);
-	};
+	var services = module.exports = exports = angular.module('services', []);
+	__webpack_require__(5)(services);
 
 
 /***/ },
@@ -28530,52 +28530,105 @@
 	'use strict';
 
 	module.exports = function(app) {
-	  app.controller('quotesController', ['$scope', '$http', function($scope, $http) {
+	  app.factory('RESTResource', ['$http', function($http) {
+	    var handleError = function(callback) {
+	      return function(res) {
+	        console.log(res.data);
+	        callback(res.data);
+	      };
+	    };
+
+	    var handleSuccess = function(callback) {
+	      return function(res) {
+	        callback(null, res.data);
+	      };
+	    };
+
+	    return function(resourceName) {
+	      var handleRequest = function(method, data, callback) {
+	        var url = '/api/' + resourceName;
+	        if (data && data._id) url += '/' + data._id;
+	        $http({
+	          method: method,
+	          url: url,
+	          data: data
+	        })
+	          .then(handleSuccess(callback), handleError(callback));
+	      };
+
+	      return {
+	        getAll: function(callback) {
+	          handleRequest('GET', null, callback);
+	        },
+
+	        save: function(data, callback) {
+	          handleRequest('POST', data, callback);
+	        },
+
+	        update: function(data, callback) {
+	          handleRequest('PUT', data, callback);
+	        },
+
+	        destroy: function(data, callback) {
+	          handleRequest('DELETE', data, callback);
+	        }
+	      }
+	    };
+	  }]);
+	};
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  __webpack_require__(7)(app);
+	};
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function(app) {
+	  app.controller('quotesController', ['$scope', 'RESTResource', function($scope, resource) {
 	    $scope.quotes = [];
 	    $scope.errors = [];
+	    var Quote = new resource('quotes');
 
 	    $scope.getAll = function() {
-	      $http.get('/api/quotes')
-	        .then(function(res) {
-	          //success
-	          $scope.quotes = res.data;
-	        }, function(res) {
-	          //error
-	          $scope.errors.push({msg: 'could not retrieve quotes from server.'});
-	          console.log(res.data);
-	        });
+	      Quote.getAll(function(err, data) {
+	        if (err) return $scope.errors.push({msg: 'error getting quotes'});
+	        $scope.quotes = data;
+	      });
 	    };
 
 	    $scope.create = function(quote) {
 	      $scope.newQuote = null; //This will clear the input box on submission
-	      $http.post('/api/quotes', quote)
-	        .then(function(res) {
-	          $scope.quotes.push(res.data);
-	          quote = null; //Remember, null is an object. Objects are passed to functions by reference.
-	        }, function(res) {
-	          console.log(res.data);
-	          $scope.errors.push(res.data);
-	        });
+	      Quote.save(quote, function(err, data) {
+	        if (err) return $scope.errors.push({msg: 'could not save quote: ' + quote.quoteBody});
+	        $scope.quotes.push(data);
+	      });
+	        //quote = null; //Remember, null is an object. Objects are passed to functions by reference.
 	    };
 
 	    $scope.destroy = function(quote) {
-	      $http.delete('/api/quotes/' + quote._id)
-	        .then(function(res) {
-	          $scope.quotes.splice($scope.quotes.indexOf(quote),1);
-	        }, function(res) {
-	          console.log(res.data);
-	          $scope.errors.push(res.data);
-	        });
+	      Quote.destroy(quote, function(err, data) {
+	        if (err) return $scope.errors.push({msg: 'could not delete quote: ' + quote.quoteBody});
+	        $scope.quotes.splice($scope.quotes.indexOf(quote),1);
+	      });
 	    };
 
 	    $scope.update = function(quote) {
-	      $http.put('/api/quotes/' + quote._id, quote)
-	        .then(function(res) {
-	          quote.editing = false;
-	        }, function(res) {
-	          quote.editing = false;
-	          console.log(res.data);
-	        });
+	      Quote.update(quote, function(err, data) {
+	        if (err) return $scope.errors.push({msg: 'could not update quote: ' + quote.quoteBody});
+	        quote.editing = false;
+	      });
 	    };
 
 	    $scope.edit = function(quote) {
@@ -28593,7 +28646,7 @@
 
 
 /***/ },
-/* 6 */
+/* 8 */
 /***/ function(module, exports) {
 
 	/**
